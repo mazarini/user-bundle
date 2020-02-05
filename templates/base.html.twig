@@ -1,0 +1,29 @@
+{# templates/base.html.twig #}
+
+{%- use '@MazariniBootstrap/asset/stylesheets.html.twig' -%}
+{%- use '@MazariniBootstrap/asset/javascripts.html.twig' -%}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			{% block head_title %}{% endblock head_title %}
+		</title>
+		{% block stylesheets %}
+			{{ parent() }}
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css"/>
+		{% endblock stylesheets %}
+		<script src="https://kit.fontawesome.com/6e0a7029cf.js" crossorigin="anonymous"></script>
+	</head>
+	<body>
+		{% block static %}{% endblock static %}
+		{% block body %}{% endblock body %}
+		{% block javascripts %}
+			{{ parent() }}
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js"></script>
+			<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+		{% endblock javascripts %}
+		{% block modal %}{% endblock modal %}
+	</body>
+</html>

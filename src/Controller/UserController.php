@@ -1,0 +1,118 @@
+<?php
+
+/*
+ * Copyright (C) 2019-2020 Mazarini <mazarini@protonmail.com>.
+ * This file is part of mazarini/user-bundle.
+ *
+ * mazarini/user-bundle is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or (at your
+ * option) any later version.
+ *
+ * mazarini/user-bundle is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY
+ * or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+ * more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ */
+
+namespace App\Controller;
+
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
+use Mazarini\CrudBundle\Controller\AbstractCrudController;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
+/**
+ * @Route("/user")
+ * @IsGranted("ROLE_ADMIN")
+ */
+class UserController extends AbstractCrudController
+{
+    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
+    {
+        parent::__construct($requestStack, $router, 'user');
+        $this->twigFolder = 'user/';
+    }
+
+    /**
+     * @Route("/", name="user_index", methods={"GET"})
+     */
+    public function index(): Response
+    {
+        return $this->indexAction();
+    }
+
+    /**
+     * @Route("/page-{page<[1-9]\d*>}.html", name="user_page", methods={"GET"})
+     */
+    public function page(UserRepository $userRepository, int $page = 1): Response
+    {
+        return $this->PageAction($userRepository, $page);
+    }
+
+    /**
+     * @Route("/new.html", name="user_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $user = new User();
+        $this->data->setEntity($user);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword($encoder->encodePassword($user, $form->get('password')->getData()));
+            $user->setRoles(['ROLE_USER']);
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('user_index');
+        }
+
+        return $this->dataRender('new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/show-{id<[1-9]\d*>}.html", name="user_show", methods={"GET"})
+     */
+    public function show(User $user): Response
+    {
+        return $this->showAction($user);
+    }
+
+    /**
+     * @Route("/edit-{id<[1-9]\d*>}.html", name="user_edit", methods={"GET","POST"})
+     */
+    public function edit(Request $request, User $user): Response
+    {
+        return $this->editAction($request, $user, UserType::class);
+    }
+
+    /**
+     * delete.
+     *
+     * @Route("/delete-{id<[1-9]\d*>}.html", name="user_delete", methods={"DELETE"})
+     */
+    public function delete(Request $request, User $user): Response
+    {
+        return $this->deleteAction($request, $user);
+    }
+
+    protected function valid(EntityInterface $entity): bool
+    {
+        return true;
+    }
+}

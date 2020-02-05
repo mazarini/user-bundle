@@ -1,0 +1,1 @@
+# mazarini/user-bundle

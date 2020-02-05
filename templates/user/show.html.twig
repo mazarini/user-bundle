@@ -1,0 +1,24 @@
+{% extends '@MazariniPagination/_view.html.twig' %}
+
+{% block title %}
+	User
+{% endblock title %}
+
+{% block view_content %}
+	<tr>
+		<th>Username</th>
+		<td>{{ data.entity.username }}</td>
+	</tr>
+	<tr>
+		<th>Email</th>
+		<td>{{ data.entity.email }}</td>
+	</tr>
+	<tr>
+		<th>Roles</th>
+		<td>{{ data.entity.roles ? data.entity.roles|json_encode : '' }}</td>
+	</tr>
+	<tr>
+		<th>Password</th>
+		<td>{{ data.entity.password }}</td>
+	</tr>
+{% endblock view_content %}
