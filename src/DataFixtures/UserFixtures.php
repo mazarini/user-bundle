@@ -40,12 +40,11 @@ class UserFixtures extends Fixture
     {
         foreach ($this->getData() as [$username, $roles]) {
             $user = new User();
-            $user
-                ->setUsername($username)
-                ->setPassword($this->passwordEncoder->encodePassword($user, $username))
-                ->setEmail($username.'@example.com')
-                ->setRoles($roles)
-            ;
+            $user->setUsername($username);
+            $user->setPassword($this->passwordEncoder->encodePassword($user, $username));
+            $user->setEmail($username.'@example.com');
+            $user->setRoles($roles);
+
             $manager->persist($user);
         }
 

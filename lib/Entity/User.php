@@ -17,18 +17,12 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App\Entity;
+namespace Mazarini\UserBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-use Mazarini\UserBundle\Entity\User as Base;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- */
-class User extends Base
+class User implements UserInterface, EntityInterface
 {
-    public function getPublicName(): string
-    {
-        return $this->username;
-    }
+    use UserTrait;
 }
