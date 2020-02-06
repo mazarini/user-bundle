@@ -40,14 +40,16 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "Mazarini\\UserBundle\\": "lib/"
         }
     },
     "autoload-dev": {
         "psr-4": {
+            "App\\": "src/",
             "App\\Tests\\": "tests/"
         }
     },
+    "replace": {},
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
