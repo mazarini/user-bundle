@@ -58,7 +58,7 @@ trait UserTrait
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password = '';
+    protected $password = '';
 
     /**
      * A visual identifier that represents this user.
