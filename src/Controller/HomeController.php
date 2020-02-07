@@ -34,10 +34,14 @@ class HomeController extends AbstractController
      */
     public function home(Request $request): Response
     {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->redirectToRoute('user_index');
+        }
+
         if ($this->isGranted('ROLE_USER')) {
             return $this->redirectToRoute('profile_show');
         }
 
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute('security_login');
     }
 }
