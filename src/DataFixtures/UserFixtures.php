@@ -32,8 +32,8 @@ class UserFixtures extends UserFixturesAbstract
     {
         return [
 //          [$name, $roles]
-            ['admin', ['ROLE_ADMIN']],
             ['user', ['ROLE_USER']],
+            ['admin', ['ROLE_ADMIN']],
             ['doe', ['ROLE_USER']],
         ];
     }
