@@ -35,7 +35,7 @@ class HomeController extends AbstractController
     public function home(Request $request): Response
     {
         if ($this->isGranted('ROLE_USER')) {
-            return $this->redirectToRoute('supplier_index');
+            return $this->redirectToRoute('profile_show');
         }
 
         return $this->redirectToRoute('login');
