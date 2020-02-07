@@ -64,7 +64,6 @@ abstract class UserFixturesAbstract extends EntityFixturesAbstract
         $user->setPassword($this->passwordEncoder->encodePassword($user, $username));
         $user->setEmail($username.'@example.com');
         $user->setRoles($roles);
-        dump($user);
 
         return $user;
     }
