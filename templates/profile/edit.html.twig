@@ -1,12 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends '@MazariniCrud/_form.html.twig' %}
 
-{% block title %}Edit User{% endblock %}
-
-{% block body %}
-    <h1>Edit User</h1>
-
-    {{ include('profile/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('profile_show') }}">back to show</a>
-
+{% block title %}
+	Edit profile
 {% endblock %}

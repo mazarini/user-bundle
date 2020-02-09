@@ -1,33 +1,16 @@
-{% extends 'base.html.twig' %}
+{% extends '@MazariniPagination/_view.html.twig' %}
 
-{% block title %}User{% endblock %}
+{% block title %}
+	User
+{% endblock title %}
 
-{% block body %}
-    <h1>User</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ user.id }}</td>
-            </tr>
-            <tr>
-                <th>Username</th>
-                <td>{{ user.username }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ user.email }}</td>
-            </tr>
-            <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ user.password }}</td>
-            </tr>
-        </tbody>
-    </table>
-    <a href="{{ path('profile_edit') }}">edit</a>
-{% endblock %}
+{% block view_content %}
+	<tr>
+		<th>Username</th>
+		<td>{{ data.entity.username }}</td>
+	</tr>
+	<tr>
+		<th>Email</th>
+		<td>{{ data.entity.email }}</td>
+	</tr>
+{% endblock view_content %}

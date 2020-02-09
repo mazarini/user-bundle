@@ -1,11 +1,5 @@
-{% extends 'base.html.twig' %}
+{% extends '@MazariniCrud/_form.html.twig' %}
 
-{% block title %}New User{% endblock %}
-
-{% block body %}
-    <h1>Create new User</h1>
-
-    {{ include('profile/_form.html.twig') }}
-
-    <a href="{{ path('login') }}">back to login</a>
+{% block title %}
+	Create an account
 {% endblock %}
