@@ -1,0 +1,15 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+	Fake Homepage
+{% endblock %}
+
+{% block content %}
+    {% if exception %}
+        {{ dump(exception) }}
+	{% else %}
+	    <p>
+    		Url "/" is not define.
+	    </p>
+	{% endif %}
+{% endblock %}

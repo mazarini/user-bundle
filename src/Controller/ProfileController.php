@@ -21,76 +21,113 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use Mazarini\CrudBundle\Controller\AbstractCrudController;
+use Mazarini\ToolsBundle\Controller\AbstractController;
+use Mazarini\ToolsBundle\Data\Data;
+use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
  * @Route("/profile")
  */
-class ProfileController extends AbstractController
+class ProfileController extends AbstractCrudController
 {
     /**
-     * @Route("/new", name="profile_new", methods={"GET","POST"})
-     * @IsGranted("ROLE_ADMIN")
+     * @var UserPasswordEncoderInterface
      */
-    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
+    protected $encoder;
+
+    /**
+     * @var FormInterface<mixed>
+     */
+    protected $form;
+
+    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $form->get('password')->getData()));
-            if ($user->getRoles() === []) {
-                $user->setRoles(['ROLE_USER']);
-            }
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('profile_show');
-        }
-
-        return $this->render('profile/new.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        parent::__construct($requestStack, $router, 'profile');
+        $this->twigFolder = 'profile/';
     }
 
     /**
-     * @Route("/show", name="profile_show", methods={"GET"})
+     * @Route("/new.html", name="profile_new", methods={"GET","POST"})
+     */
+    public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
+    {
+        $this->encoder = $encoder;
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        $this->form = $form;
+
+        return $this->editAction($request, $user, UserType::class);
+    }
+
+    /**
+     * @Route("/show.html", name="profile_show", methods={"GET"})
      * @IsGranted("ROLE_USER")
      */
     public function show(): Response
     {
-        return $this->render('profile/show.html.twig', [
-            'user' => $this->getUser(),
-        ]);
+        $user = $this->getUser();
+        if (null === $user) {
+            return $this->redirectToRoute('security_login');
+        } elseif (!is_a($user, EntityInterface::class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+        }
+
+        return $this->showAction($user);
     }
 
     /**
-     * @Route("/edit", name="profile_edit", methods={"GET","POST"})
+     * @Route("/edit.html", name="profile_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request): Response
     {
         $user = $this->getUser();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
-            return $this->redirectToRoute('profile_show');
+        if (null === $user) {
+            return $this->redirectToRoute('security_login');
+        } elseif (!is_a($user, EntityInterface::class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
         }
 
-        return $this->render('profile/edit.html.twig', [
-            'user' => $user,
-            'form' => $form->createView(),
-        ]);
+        return $this->editAction($request, $user, UserType::class);
+    }
+
+    protected function valid(EntityInterface $entity): bool
+    {
+        if (!is_a($entity, User::class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($entity)));
+        }
+        /*
+         * Encode password when created
+         */
+        if ($entity->isNew()) {
+            $entity->setPassword($this->encoder->encodePassword($entity, $this->form->get('password')->getData()));
+        }
+        /*
+         * Set default role if none
+         */
+        if ($entity->getRoles() === []) {
+            $entity->setRoles(['ROLE_USER']);
+        }
+
+        return true;
+    }
+
+    protected function initUrl(Data $data): AbstractController
+    {
+        $data->addLink('edit', $data->generateUrl('_edit'));
+        $data->addLink('show', $data->generateUrl('_show'), 'View');
+
+        return $this;
     }
 }

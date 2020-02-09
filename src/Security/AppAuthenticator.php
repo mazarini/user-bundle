@@ -118,10 +118,6 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
     /**
      * getPassword.
-     */
-
-    /**
-     * getPassword.
      *
      * @param array<string,string> $credentials
      */
@@ -131,7 +127,7 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
     }
 
     /**
-     * getPassword.
+     * onAuthenticationSuccess.
      *
      * @param string $providerKey
      */
