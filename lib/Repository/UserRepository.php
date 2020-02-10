@@ -36,11 +36,20 @@ class UserRepository extends EntityRepositoryAbstract implements PasswordUpgrade
     /**
      * @var string
      */
+    protected $loginProperty = 'username';
+    /**
+     * @var string
+     */
     protected $orderColumn = 'e.username';
 
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+    public function FindLogin(string $login): ?UserInterface
+    {
+        return $this->findOneBy(['username' => $login]);
     }
 
     /**

@@ -19,37 +19,20 @@
 
 namespace App\Controller;
 
-use Mazarini\ToolsBundle\Controller\AbstractController;
-use Mazarini\ToolsBundle\Data\Data;
-use Symfony\Component\HttpFoundation\Response;
+use Mazarini\UserBundle\Controller\SecurityController as BaseController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
-class SecurityController extends AbstractController
+/**
+ * @Route("/")
+ */
+class SecurityController extends BaseController
 {
-    /**
-     * @Route("/login", name="security_login")
+    /*
+     *
+     * public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
+     * {
+     *     parent::__construct($requestStack, $router, 'profile');
+     *     $this->twigFolder = '@MazariniUser/security/';
+     * }
      */
-    public function login(AuthenticationUtils $authenticationUtils): Response
-    {
-        // get the login error if there is one
-        $error = $authenticationUtils->getLastAuthenticationError();
-        // last username entered by the user
-        $lastUsername = $authenticationUtils->getLastUsername();
-
-        return $this->dataRender('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
-    }
-
-    /**
-     * @Route("/logout", name="security_logout")
-     */
-    public function logout(): void
-    {
-        throw new \Exception('This method can be blank - it will be intercepted by the logout key on your firewall');
-    }
-
-    protected function initUrl(Data $data): AbstractController
-    {
-        return $this;
-    }
 }

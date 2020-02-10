@@ -21,7 +21,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
-use Mazarini\UserBundle\Repository\UserRepository as Base;
+use Mazarini\UserBundle\Repository\UserRepository as BaseUserRepository;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -29,10 +29,11 @@ use Mazarini\UserBundle\Repository\UserRepository as Base;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends Base
+class UserRepository extends BaseUserRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry);
+        $this->loginProperty = 'username';
     }
 }
