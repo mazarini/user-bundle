@@ -10,8 +10,4 @@ if (false === getenv('SYMFONY_PHPUNIT_DIR')) {
     putenv('SYMFONY_PHPUNIT_DIR='.dirname(__DIR__).'/var/cache/phpunit');
 }
 
-if (false === getenv('PHPUNIT_RESULT_CACHE')) {
-    putenv('PHPUNIT_RESULT_CACHE='.getenv('SYMFONY_PHPUNIT_DIR'));
-}
-
 require dirname(__DIR__).'/vendor/symfony/phpunit-bridge/bin/simple-phpunit.php';

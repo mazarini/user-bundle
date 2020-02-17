@@ -17,9 +17,19 @@
  * You should have received a copy of the GNU General Public License
  */
 
-error_reporting(E_ALL);
-$bootstrapFile = dirname(__DIR__).'/config/bootstrap.php';
-if (!file_exists($bootstrapFile)) {
-    throw new RuntimeException(sprintf('Please create "%s".', $bootstrapFile));
+use Symfony\Component\Dotenv\Dotenv;
+
+require dirname(__DIR__).'/vendor/autoload.php';
+
+$dotEnvMethod = '';
+if (file_exists(dirname(__DIR__).'/config/bootstrap.php')) {
+    require dirname(__DIR__).'/config/bootstrap.php';
+} else {
+    $dotEnvMethod = 'bootEnv';
 }
-require $bootstrapFile;
+if (method_exists(Dotenv::class, $dotEnvMethod)) {
+    (new Dotenv())->$dotEnvMethod(dirname(__DIR__).'/.env');
+} else {
+    $dotEnvMethod = 'loadEnv';
+    (new Dotenv(false))->$dotEnvMethod(dirname(__DIR__).'/.env');
+}

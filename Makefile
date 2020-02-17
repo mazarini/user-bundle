@@ -19,11 +19,12 @@ composer:
 	composer -vv validate --strict
 
 twig:
-	bin/console lint:twig templates/ 
+	bin/console lint:twig templates/ lib/Resources/views/
 	twigcs templates -vv
+	twigcs lib/Resources/views -vv
 
 yaml:
-	bin/console lint:yaml config phpstan.neon.dist .travis.yml
+	bin/console lint:yaml config lib/Resources/config phpstan.neon.dist .travis.yml
 
 cs:
 	php-cs-fixer fix
