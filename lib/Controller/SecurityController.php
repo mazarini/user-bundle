@@ -21,20 +21,12 @@ namespace Mazarini\UserBundle\Controller;
 
 use Mazarini\ToolsBundle\Controller\AbstractController;
 use Mazarini\ToolsBundle\Data\Data;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $route = 'profile')
-    {
-        parent::__construct($requestStack, $router, $route);
-        $this->twigFolder = '@MazariniUser/security/';
-    }
-
     /**
      * @Route("/login", name="security_login")
      */
@@ -59,5 +51,10 @@ class SecurityController extends AbstractController
     protected function initUrl(Data $data): AbstractController
     {
         return $this;
+    }
+
+    protected function getTwigFolder(): string
+    {
+        return '@MazariniUser/security/';
     }
 }

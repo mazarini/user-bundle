@@ -21,6 +21,7 @@ namespace Mazarini\UserBundle\Repository;
 
 use App\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use Mazarini\PaginationBundle\Repository\AbstractRepository;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -31,7 +32,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends EntityRepositoryAbstract implements PasswordUpgraderInterface
+class UserRepository extends AbstractRepository implements PasswordUpgraderInterface
 {
     /**
      * @var string

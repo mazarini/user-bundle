@@ -28,10 +28,8 @@ use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
@@ -49,12 +47,6 @@ class ProfileController extends AbstractCrudController
      * @var FormInterface<mixed>
      */
     protected $form;
-
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $baseRoute = 'profile')
-    {
-        parent::__construct($requestStack, $router, $baseRoute);
-        $this->twigFolder = '@MazariniUser/profile/';
-    }
 
     /**
      * @Route("/new.html", name="profile_new", methods={"GET","POST"})
@@ -129,5 +121,10 @@ class ProfileController extends AbstractCrudController
         $data->addLink('show', $data->generateUrl('_show'), 'View');
 
         return $this;
+    }
+
+    protected function getTwigFolder(): string
+    {
+        return '@MazariniUser/profile/';
     }
 }

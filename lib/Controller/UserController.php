@@ -27,10 +27,8 @@ use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
@@ -49,12 +47,6 @@ class UserController extends AbstractCrudController
      * @var FormInterface<mixed>
      */
     protected $form;
-
-    public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router, string $baseRoute = 'user')
-    {
-        parent::__construct($requestStack, $router, $baseRoute);
-        $this->twigFolder = '@MazariniUser/user/';
-    }
 
     /**
      * @Route("/", name="user_index", methods={"GET"})
@@ -110,6 +102,11 @@ class UserController extends AbstractCrudController
     public function delete(Request $request, User $user): Response
     {
         return $this->deleteAction($request, $user);
+    }
+
+    protected function getTwigFolder(): string
+    {
+        return '@MazariniUser/user/';
     }
 
     protected function valid(EntityInterface $entity): bool
