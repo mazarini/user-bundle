@@ -1293,12 +1293,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/crud-bundle.git",
-                "reference": "3c52a82270218dd996a8f455bf02936334abfe2e"
+                "reference": "f8a94e5e6d468a124bffcb0422f146ae6b06be83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/crud-bundle/zipball/3c52a82270218dd996a8f455bf02936334abfe2e",
-                "reference": "3c52a82270218dd996a8f455bf02936334abfe2e",
+                "url": "https://api.github.com/repos/mazarini/crud-bundle/zipball/f8a94e5e6d468a124bffcb0422f146ae6b06be83",
+                "reference": "f8a94e5e6d468a124bffcb0422f146ae6b06be83",
                 "shasum": ""
             },
             "require": {
@@ -1357,7 +1357,7 @@
                 "pagination",
                 "symfony"
             ],
-            "time": "2020-02-16T20:05:00+00:00"
+            "time": "2020-02-17T08:59:58+00:00"
         },
         {
             "name": "mazarini/pagination-bundle",

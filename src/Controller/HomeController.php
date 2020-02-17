@@ -56,8 +56,12 @@ class HomeController extends AbstractController
         return $this->redirect('/', Response::HTTP_MOVED_PERMANENTLY);
     }
 
-    protected function initUrl(Data $data): AbstractController
+    protected function setUrl(Data $data): void
     {
-        return $this;
+    }
+
+    protected function getTwigFolder(): string
+    {
+        return '';
     }
 }

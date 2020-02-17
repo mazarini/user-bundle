@@ -25,7 +25,7 @@ use App\Repository\UserRepository;
 use Mazarini\CrudBundle\Controller\AbstractCrudController;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -42,11 +42,6 @@ class UserController extends AbstractCrudController
      * @var UserPasswordEncoderInterface
      */
     protected $encoder;
-
-    /**
-     * @var FormInterface<mixed>
-     */
-    protected $form;
 
     /**
      * @Route("/", name="user_index", methods={"GET"})
@@ -70,12 +65,8 @@ class UserController extends AbstractCrudController
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $this->encoder = $encoder;
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        $this->form = $form;
 
-        return $this->editAction($request, $user, UserType::class);
+        return $this->editAction($request, new User(), UserType::class);
     }
 
     /**
@@ -109,7 +100,7 @@ class UserController extends AbstractCrudController
         return '@MazariniUser/user/';
     }
 
-    protected function valid(EntityInterface $entity): bool
+    protected function valid(EntityInterface $entity, Form $form): bool
     {
         if (!is_a($entity, User::class)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($entity)));
@@ -118,7 +109,7 @@ class UserController extends AbstractCrudController
          * Encode password when created
          */
         if ($entity->isNew()) {
-            $entity->setPassword($this->encoder->encodePassword($entity, $this->form->get('password')->getData()));
+            $entity->setPassword($this->encoder->encodePassword($entity, $form->get('password')->getData()));
         }
         /*
          * Set default role if none

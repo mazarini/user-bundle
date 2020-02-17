@@ -22,11 +22,10 @@ namespace Mazarini\UserBundle\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Mazarini\CrudBundle\Controller\AbstractCrudController;
-use Mazarini\ToolsBundle\Controller\AbstractController;
 use Mazarini\ToolsBundle\Data\Data;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -44,22 +43,11 @@ class ProfileController extends AbstractCrudController
     protected $encoder;
 
     /**
-     * @var FormInterface<mixed>
-     */
-    protected $form;
-
-    /**
      * @Route("/new.html", name="profile_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        $this->encoder = $encoder;
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        $this->form = $form;
-
-        return $this->editAction($request, $user, UserType::class);
+        return $this->editAction($request, new User(), UserType::class);
     }
 
     /**
@@ -68,14 +56,7 @@ class ProfileController extends AbstractCrudController
      */
     public function show(): Response
     {
-        $user = $this->getUser();
-        if (null === $user) {
-            return $this->redirectToRoute('security_login');
-        } elseif (!is_a($user, EntityInterface::class)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
-
-        return $this->showAction($user);
+        return $this->showAction($this->getUser());
     }
 
     /**
@@ -84,17 +65,10 @@ class ProfileController extends AbstractCrudController
      */
     public function edit(Request $request): Response
     {
-        $user = $this->getUser();
-        if (null === $user) {
-            return $this->redirectToRoute('security_login');
-        } elseif (!is_a($user, EntityInterface::class)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
-
-        return $this->editAction($request, $user, UserType::class);
+        return $this->editAction($request, $this->getUser(), UserType::class);
     }
 
-    protected function valid(EntityInterface $entity): bool
+    protected function valid(EntityInterface $entity, Form $form): bool
     {
         if (!is_a($entity, User::class)) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($entity)));
@@ -103,7 +77,7 @@ class ProfileController extends AbstractCrudController
          * Encode password when created
          */
         if ($entity->isNew()) {
-            $entity->setPassword($this->encoder->encodePassword($entity, $this->form->get('password')->getData()));
+            $entity->setPassword($this->encoder->encodePassword($entity, $form->get('password')->getData()));
         }
         /*
          * Set default role if none
@@ -115,16 +89,31 @@ class ProfileController extends AbstractCrudController
         return true;
     }
 
-    protected function initUrl(Data $data): AbstractController
+    protected function setUrl(Data $data): void
     {
         $data->addLink('edit', $data->generateUrl('_edit'));
         $data->addLink('show', $data->generateUrl('_show'), 'View');
-
-        return $this;
     }
 
     protected function getTwigFolder(): string
     {
         return '@MazariniUser/profile/';
+    }
+
+    /**
+     * getUser.
+     *
+     * @return EntityInterface
+     */
+    protected function getUser()
+    {
+        $user = parent::getUser();
+        if (null === $user) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', 'null'));
+        } elseif (!is_a($user, EntityInterface::class)) {
+            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+        }
+
+        return $user;
     }
 }
