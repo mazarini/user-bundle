@@ -56,7 +56,7 @@ class ProfileController extends AbstractCrudController
      */
     public function show(): Response
     {
-        return $this->showAction($this->getUser());
+        return $this->showAction($this->getConnectedUser());
     }
 
     /**
@@ -65,7 +65,7 @@ class ProfileController extends AbstractCrudController
      */
     public function edit(Request $request): Response
     {
-        return $this->editAction($request, $this->getUser(), UserType::class);
+        return $this->editAction($request, $this->getConnectedUser(), UserType::class);
     }
 
     protected function valid(EntityInterface $entity, Form $form): bool
@@ -101,13 +101,13 @@ class ProfileController extends AbstractCrudController
     }
 
     /**
-     * getUser.
+     * getConnectedUser.
      *
-     * @return EntityInterface
+     * Note : getUser is final for symfony 4.4
      */
-    protected function getUser()
+    protected function getConnectedUser(): EntityInterface
     {
-        $user = parent::getUser();
+        $user = $this->getUser();
         if (null === $user) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', 'null'));
         } elseif (!is_a($user, EntityInterface::class)) {
