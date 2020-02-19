@@ -19,40 +19,8 @@
 
 namespace App\Form;
 
-use App\Entity\User;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Mazarini\UserBundle\Form\UserType as BaseType;
 
-class UserType extends AbstractType
+class UserType extends BaseType
 {
-    /**
-     * buildForm.
-     *
-     * @param FormBuilderInterface<int,string|FormBuilderInterface> $builder
-     * @param array<string,mixed>                                   $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        $builder
-            ->add('username', TextType::class)
-            ->add('email', EmailType::class)
-        ;
-        if ($options['data']->isNew()) {
-            $builder
-                ->add('password', RepeatedPasswordType::class, ['mapped' => false]);
-        }
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => User::class,
-        ]);
-    }
 }
