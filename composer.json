@@ -9,7 +9,6 @@
         "ext-iconv": "*",
         "doctrine/doctrine-bundle": "^2.0",
         "doctrine/orm": "^2.7",
-        "laminas/laminas-code": "^3.4",
         "mazarini/bootstrap-bundle": "^1.0dev",
         "mazarini/crud-bundle": "^1.0dev",
         "mazarini/pagination-bundle": "^1.0@dev",
