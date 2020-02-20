@@ -43,6 +43,18 @@ class ProfileController extends AbstractCrudController
     protected $encoder;
 
     /**
+     * @Route("/", name="profile_index", methods={"GET","POST"})
+     */
+    public function index(): Response
+    {
+        if (null === $this->getUser()) {
+            return  $this->redirectToRoute('homepage', [], Response::HTTP_MOVED_PERMANENTLY);
+        }
+
+        return  $this->redirectToRoute('profile_show', [], Response::HTTP_MOVED_PERMANENTLY);
+    }
+
+    /**
      * @Route("/new.html", name="profile_new", methods={"GET","POST"})
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response

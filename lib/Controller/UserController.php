@@ -33,7 +33,6 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
- * @Route("/user")
  * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends AbstractCrudController
