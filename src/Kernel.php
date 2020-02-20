@@ -20,11 +20,33 @@
 namespace App;
 
 use Mazarini\ToolsBundle\Kernel as BaseKernel;
+use App\Controller\HomeController;
+use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 
 class Kernel extends BaseKernel
 { 
     public function getProjectDir(): string
     {
         return \dirname(__DIR__);
+    }
+
+        /**
+     * configureRoutes.
+     *
+     * RouteCollectionBuilder : 4.4 => 5.0
+     * RoutingConfigurator : 5.1 => ?
+     *
+     * @param object $routes
+     */
+    protected function configureRoutes($routes): void
+    {
+        parent::configureRoutes($routes);
+        if (method_exists($routes,'add')) {
+            if ($routes instanceof RoutingConfigurator) {
+                $routes->add('homepage', '/')->controller([HomeController::class, 'home']);
+            } else {
+                $routes->add('/', HomeController::class.'::home', 'homepage')->setMethods('GET');
+            }
+        }
     }
 }

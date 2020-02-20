@@ -21,6 +21,7 @@ namespace App\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeControllerTest extends WebTestCase
 {
@@ -37,14 +38,27 @@ class HomeControllerTest extends WebTestCase
     /**
      * @dataProvider getUrls
      */
-    public function testUrls(string $url, string $method = 'GET', int $response = 200): void
+    public function testUrls(string $url, string $method = 'GET', int $response1 = 0, int $response2 = 0): void
     {
+        $response = 0 === $response1 ? Response::HTTP_MOVED_PERMANENTLY : $response1;
+
         $this->client->request($method, $url);
 
         $this->assertSame(
             $response,
             $this->client->getResponse()->getStatusCode(),
-            sprintf('The %s public URL loads correctly.', $url)
+            sprintf('The %s public URL loads correctly with status %d (really %d)', $url, $response, $this->client->getResponse()->getStatusCode())
+        );
+
+        $url .= '/';
+        $response = 0 === $response2 ? $response : $response2;
+
+        $this->client->request($method, $url);
+
+        $this->assertSame(
+            $response,
+            $this->client->getResponse()->getStatusCode(),
+            sprintf('The %s public URL loads correctly with status %d (really %d)', $url, $response, $this->client->getResponse()->getStatusCode())
         );
     }
 
@@ -55,7 +69,8 @@ class HomeControllerTest extends WebTestCase
      */
     public function getUrls(): \Traversable
     {
-        yield ['', 'GET', 404];
-        yield ['/', 'GET', 404];
+        yield [''];
+        yield ['/user', 'GET', Response::HTTP_MOVED_PERMANENTLY, Response::HTTP_FOUND]; // /user => /user/ => /login
+        yield ['/profile'];
     }
 }

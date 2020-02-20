@@ -19,49 +19,12 @@
 
 namespace App\Controller;
 
-use Exception;
-use Mazarini\ToolsBundle\Controller\AbstractController;
-use Mazarini\ToolsBundle\Data\Data;
-use Symfony\Bundle\FrameworkBundle\Routing\Router;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Exception\NoConfigurationException;
+use Mazarini\ToolsBundle\Controller\HomeControllerAbstract;
 
-/**
- * @Route("/")
- */
-class HomeController extends AbstractController
+class HomeController extends HomeControllerAbstract
 {
-    /**
-     * @Route("/_homepage", name="home_page", methods={"GET","POST"})
-     * @Route("/_homepage", name="homepage", methods={"GET","POST"})
-     */
-    public function home(Request $request): Response
+    protected function getRedirectUrl(): string
     {
-        $parameters = [];
-        try {
-            $router = $this->get('router');
-            if ($router instanceof Router) {
-                $route = $router->match('/')['_route'];
-            } else {
-                throw new Exception('Router not found in container');
-            }
-        } catch (NoConfigurationException $e) {
-            return $this->dataRender('security/homepage.html.twig', ['exception' => false]);
-        } catch (Exception $e) {
-            return $this->dataRender('security/homepage.html.twig', ['exception' => $e]);
-        }
-
-        return $this->redirect('/', Response::HTTP_MOVED_PERMANENTLY);
-    }
-
-    protected function setUrl(Data $data): void
-    {
-    }
-
-    protected function getTwigFolder(): string
-    {
-        return '';
+        return $this->generateUrl('profile_show');
     }
 }
