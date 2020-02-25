@@ -1,11 +1,13 @@
-{% extends '@MazariniPagination/_view.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block title %}
-	User
-{% endblock title %}
+	Change password
+{% endblock %}
 
-{% block view_content %}
-	<tr>
+{% block content %}
+<table class="table">
+	<tbody>
+<tr>
 		<th>Username</th>
 		<td>{{ data.entity.username }}</td>
 	</tr>
@@ -21,4 +23,8 @@
 		<th>Password</th>
 		<td>{{ data.entity.password }}</td>
 	</tr>
-{% endblock view_content %}
+</tbody>
+</table>
+{% include '@MazariniPagination/_button.html.twig' %}
+{% include '@MazariniBootstrap/button/link.html.twig' with { 'link': data.links.change_password } %}
+{% endblock content %}

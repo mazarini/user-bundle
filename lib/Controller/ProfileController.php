@@ -21,21 +21,17 @@ namespace Mazarini\UserBundle\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use Mazarini\CrudBundle\Controller\AbstractCrudController;
 use Mazarini\ToolsBundle\Data\Data;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
- * @Route("/profile")
+ * @Route("/")
  */
-class ProfileController extends AbstractCrudController
+class ProfileController extends UserControllerAbstract
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -43,7 +39,7 @@ class ProfileController extends AbstractCrudController
     protected $encoder;
 
     /**
-     * @Route("/", name="profile_index", methods={"GET","POST"})
+     * @Route("", name="profile_index", methods={"GET","POST"})
      */
     public function index(): Response
     {
@@ -80,25 +76,13 @@ class ProfileController extends AbstractCrudController
         return $this->editAction($request, $this->getConnectedUser(), UserType::class);
     }
 
-    protected function valid(EntityInterface $entity, Form $form): bool
+    /**
+     * @Route("/password.html", name="profile_change_password", methods={"GET","POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        if (!is_a($entity, User::class)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($entity)));
-        }
-        /*
-         * Encode password when created
-         */
-        if ($entity->isNew()) {
-            $entity->setPassword($this->encoder->encodePassword($entity, $form->get('password')->getData()));
-        }
-        /*
-         * Set default role if none
-         */
-        if ($entity->getRoles() === []) {
-            $entity->setRoles(['ROLE_USER']);
-        }
-
-        return true;
+        return parent::changePasswordAction($request, $encoder, $this->getConnectedUser());
     }
 
     protected function setUrl(Data $data): void
@@ -110,22 +94,5 @@ class ProfileController extends AbstractCrudController
     protected function getTwigFolder(): string
     {
         return '@MazariniUser/profile/';
-    }
-
-    /**
-     * getConnectedUser.
-     *
-     * Note : getUser is final for symfony 4.4
-     */
-    protected function getConnectedUser(): EntityInterface
-    {
-        $user = $this->getUser();
-        if (null === $user) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', 'null'));
-        } elseif (!is_a($user, EntityInterface::class)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
-
-        return $user;
     }
 }

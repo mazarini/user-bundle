@@ -22,20 +22,16 @@ namespace Mazarini\UserBundle\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
-use Mazarini\CrudBundle\Controller\AbstractCrudController;
-use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 /**
  * @IsGranted("ROLE_ADMIN")
  */
-class UserController extends AbstractCrudController
+class UserController extends UserControllerAbstract
 {
     /**
      * @var UserPasswordEncoderInterface
@@ -43,7 +39,7 @@ class UserController extends AbstractCrudController
     protected $encoder;
 
     /**
-     * @Route("/", name="user_index", methods={"GET"})
+     * @Route("", name="user_index", methods={"GET"})
      */
     public function index(): Response
     {
@@ -63,9 +59,7 @@ class UserController extends AbstractCrudController
      */
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
-        $this->encoder = $encoder;
-
-        return $this->editAction($request, new User(), UserType::class);
+        return parent::new($request, $encoder);
     }
 
     /**
@@ -74,6 +68,14 @@ class UserController extends AbstractCrudController
     public function show(User $user): Response
     {
         return $this->showAction($user);
+    }
+
+    /**
+     * @Route("/password-{id<[1-9]\d*>}.html", name="user_change_password", methods={"GET","POST"})
+     */
+    public function changePassword(Request $request, UserPasswordEncoderInterface $encoder, User $user): Response
+    {
+        return parent::changePasswordAction($request, $encoder, $user);
     }
 
     /**
@@ -99,24 +101,13 @@ class UserController extends AbstractCrudController
         return '@MazariniUser/user/';
     }
 
-    protected function valid(EntityInterface $entity, Form $form): bool
+    /**
+     * getCrudAction.
+     *
+     * @return array<string,string>
+     */
+    protected function getCrudAction(): array
     {
-        if (!is_a($entity, User::class)) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($entity)));
-        }
-        /*
-         * Encode password when created
-         */
-        if ($entity->isNew()) {
-            $entity->setPassword($this->encoder->encodePassword($entity, $form->get('password')->getData()));
-        }
-        /*
-         * Set default role if none
-         */
-        if ($entity->getRoles() === []) {
-            $entity->setRoles(['ROLE_USER']);
-        }
-
-        return true;
+        return ['_edit' => 'Modifier', '_show' => 'Afficher', '_delete' => 'Supprimer', '_change_password' => 'Mot de passe'];
     }
 }
