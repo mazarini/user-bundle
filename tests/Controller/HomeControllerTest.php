@@ -70,7 +70,7 @@ class HomeControllerTest extends WebTestCase
     public function getUrls(): \Traversable
     {
         yield [''];
-        yield ['/user', 'GET', Response::HTTP_MOVED_PERMANENTLY, Response::HTTP_FOUND]; // /user => /user/ => /login
+        yield ['/user', 'GET', Response::HTTP_FOUND, Response::HTTP_MOVED_PERMANENTLY]; // /user => /user/ => /login
         yield ['/profile'];
     }
 }
