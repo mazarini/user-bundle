@@ -1,30 +1,57 @@
 {% extends 'layout.html.twig' %}
 
+{% block head_title %}
+	{{ data.entity.username }}
+{% endblock head_title %}
+
 {% block title %}
-	Change password
-{% endblock %}
+	Fiche
+	{{ data.entity.username }}
+{% endblock title %}
 
 {% block content %}
-<table class="table">
-	<tbody>
-<tr>
-		<th>Username</th>
-		<td>{{ data.entity.username }}</td>
-	</tr>
-	<tr>
-		<th>Email</th>
-		<td>{{ data.entity.email }}</td>
-	</tr>
-	<tr>
-		<th>Roles</th>
-		<td>{{ data.entity.roles ? data.entity.roles|json_encode : '' }}</td>
-	</tr>
-	<tr>
-		<th>Password</th>
-		<td>{{ data.entity.password }}</td>
-	</tr>
-</tbody>
-</table>
-{% include '@MazariniPagination/_button.html.twig' %}
-{% include '@MazariniBootstrap/button/link.html.twig' with { 'link': data.links.change_password } %}
+
+	{% embed '@MazariniBootstrap/crud/_view.html.twig' with {'data': data } %}
+
+		{% block content %}
+			<tr>
+				<th>Username</th>
+				<td>{{ data.entity.username }}</td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{{ data.entity.email }}</td>
+			</tr>
+			<tr>
+				<th>Roles</th>
+				<td>{{ data.entity.roles ? data.entity.roles|json_encode : '' }}</td>
+			</tr>
+		{% endblock content %}
+
+		{% block edit %}
+			{% include '@MazariniBootstrap/button/link.html.twig' with { 'link': data.links.change_password } %}
+			{{ parent() }}
+		{% endblock edit %}
+
+	{% endembed %}
+
 {% endblock content %}
+
+{% block modal %}
+
+	{% embed '@MazariniBootstrap/crud/_delete_form.html.twig' with {'data': data, 'modal_id': 'modalDeleteId'} %}
+
+		{% block content_confirm %}
+			<p>
+				Etes vous sur de supprimer l'utilisateur
+										"{{ data.entity.username }}"
+										?
+			</p>
+			<p>
+				Cette opération est irréversible.
+			</p>
+		{% endblock content_confirm %}
+
+	{% endembed %}
+
+{% endblock modal %}

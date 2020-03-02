@@ -1,12 +1,16 @@
 {% extends 'layout.html.twig' %}
 
 {% block title %}
-	Users
-{% endblock %}
+	Utilisateurs
+{% endblock title %}
+
+{% block head_title %}
+	Utilisateurs
+{% endblock head_title %}
 
 {% block content %}
 
-	{% embed '@MazariniPagination/_list.html.twig' with {'span': 3} %}
+	{% embed '@MazariniBootstrap/crud/_index.html.twig' with {'span': 3} %}
 
 		{% block page_header %}
 			<th>Username</th>

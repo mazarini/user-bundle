@@ -4,7 +4,7 @@
 
 {% block first_bar_container %}
 	<div class="list-group">
-		<a href="{{ path('homepage') }}" class="list-group-item list-group-item-action">
+		<a href="/" class="list-group-item list-group-item-action">
 			Home
 		</a>
 		{% if app.user %}
@@ -31,7 +31,5 @@
 {% endblock first_bar_container %}
 
 {% block modal %}
-	{% if data.isSetEntity %}
-		{% include '@MazariniCrud/_delete_form.html.twig' with {'modal_id': 'modalDeleteId'} %}
-	{% endif %}
+	{% include '@MazariniBootstrap/crud/_delete_form.html.twig' with {'modal_id': 'modalDeleteId'} %}
 {% endblock modal %}

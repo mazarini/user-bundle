@@ -22,7 +22,7 @@ namespace Mazarini\UserBundle\Controller;
 use App\Entity\User;
 use App\Form\ChangePasswordType;
 use App\Form\UserType;
-use Mazarini\CrudBundle\Controller\AbstractCrudController;
+use Mazarini\CrudBundle\Controller\CrudControllerAbstract;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
-class UserControllerAbstract extends AbstractCrudController
+class UserControllerAbstract extends CrudControllerAbstract
 {
     /**
      * @var UserPasswordEncoderInterface

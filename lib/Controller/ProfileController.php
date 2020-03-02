@@ -43,10 +43,6 @@ class ProfileController extends UserControllerAbstract
      */
     public function index(): Response
     {
-        if (null === $this->getUser()) {
-            return  $this->redirectToRoute('homepage', [], Response::HTTP_MOVED_PERMANENTLY);
-        }
-
         return  $this->redirectToRoute('profile_show', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 
@@ -89,6 +85,8 @@ class ProfileController extends UserControllerAbstract
     {
         $data->addLink('edit', $data->generateUrl('_edit'));
         $data->addLink('show', $data->generateUrl('_show'), 'View');
+        $data->addLink('change_password', $data->generateUrl('_change_password'), 'Mot de passe');
+        $data->addLink('index', '/', 'Liste');
     }
 
     protected function getTwigFolder(): string
