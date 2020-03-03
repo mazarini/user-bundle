@@ -1,0 +1,2 @@
+mazarini_user:
+    resource: '@MazariniUserBundle/Resources/config/route.yaml'

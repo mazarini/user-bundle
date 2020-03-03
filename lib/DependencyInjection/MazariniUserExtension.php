@@ -17,26 +17,28 @@
  * You should have received a copy of the GNU General Public License
  */
 
-namespace App\Controller;
+namespace Mazarini\UserBundle\DependencyInjection;
 
-use App\Entity\User;
-use Mazarini\UserBundle\Controller\UserController as BaseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
-/**
- * @Route("/user")
- * @IsGranted("ROLE_ADMIN")
- */
-class UserController extends BaseController
+class MazariniUserExtension extends Extension
 {
-    /*
-     public function __construct(RequestStack $requestStack, UrlGeneratorInterface $router)
-     {
-         parent::__construct($requestStack, $router, 'user');
-         $this->twigFolder = 'user/';
-     }
+    /**
+     * load.
+     *
+     * @param array<string,mixed> $configs
+     *
+     * @return void
      */
+    public function load(array $configs, ContainerBuilder $container)
+    {
+        $loader = new YamlFileLoader(
+            $container,
+            new FileLocator(__DIR__.'/../Resources/config')
+        );
+        $loader->load('services.yaml');
+    }
 }

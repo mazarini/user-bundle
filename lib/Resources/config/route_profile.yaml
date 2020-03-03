@@ -1,0 +1,3 @@
+controllers:
+    resource: '@MazariniUserBundle/Controller/ProfileController.php'
+    type: annotation

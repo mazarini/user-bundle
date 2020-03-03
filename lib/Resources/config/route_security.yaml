@@ -1,0 +1,3 @@
+controllers:
+    resource: '@MazariniUserBundle/Controller/SecurityController.php'
+    type: annotation

@@ -1,0 +1,11 @@
+mazarini_user_profile:
+    resource: '@MazariniUserBundle/Resources/config/route_profile.yaml'
+    prefix: /profile
+
+mazarini_user_security:
+    resource: '@MazariniUserBundle/Resources/config/route_security.yaml'
+    prefix: /
+
+mazarini_user_user:
+    resource: '@MazariniUserBundle/Resources/config/route_user.yaml'
+    prefix: /admin/user
