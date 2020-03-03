@@ -55,12 +55,12 @@ class UrlUserControllerTest extends WebTestCase
      */
     public function getUrls(): \Traversable
     {
-        yield ['/user/page-0.html', 'GET', 404];
-        yield ['/user/page-1.html', 'GET', 302];
-        yield ['/user/page-2.html', 'GET', 302];
-        yield ['/user/page-3.html', 'GET', 302];
-        yield ['/user/new.html', 'GET', 302];
-        yield ['/user/show-1.html', 'GET', 302];
-        yield ['/user/edit-1.html', 'GET', 302];
+        yield ['/admin/user/page-0.html', 'GET', 404];
+        yield ['/admin/user/page-1.html', 'GET', 302];
+        yield ['/admin/user/page-2.html', 'GET', 302];
+        yield ['/admin/user/page-3.html', 'GET', 302];
+        yield ['/admin/user/new.html', 'GET', 302];
+        yield ['/admin/user/show-1.html', 'GET', 302];
+        yield ['/admin/user/edit-1.html', 'GET', 302];
     }
 }

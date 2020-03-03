@@ -24,19 +24,18 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
-class HomeControllerTest extends WebTestCase
+class SecurityControllerTest extends WebTestCase
 {
     use LoggedTrait;
 
     /**
      * @dataProvider getUrls
      */
-    public function testUrls(string $url, string $targetUrl): void
+    public function testUrls(string $user, string $method, string $url, string $targetUrl): void
     {
-        $statusCode = Response::HTTP_MOVED_PERMANENTLY;
-        $method = 'GET';
+        $statusCode = Response::HTTP_FOUND;
         $parameters = [];
-        $client = $this->getLoggedClient('admin');
+        $client = $this->getLoggedClient($user);
         $client->request($method, $url, $parameters);
         $response = $client->getResponse();
         $this->assertRedirect($url, $statusCode, $targetUrl, $response);
@@ -51,28 +50,32 @@ class HomeControllerTest extends WebTestCase
             $this->assertSame(
             $statusCode,
             $response->getStatusCode(),
-            sprintf('The url "%s" is redirect with status %d / "%s" (actual statuscode %d / "%s")', $url, $statusCode, Response::$statusTexts[$statusCode], $response->getStatusCode(), Response::$statusTexts[$response->getStatusCode()])
-        );
+                sprintf('The url "%s" is redirect with status %d / "%s" (actual statuscode %d / "%s")', $url, $statusCode, Response::$statusTexts[$statusCode], $response->getStatusCode(), Response::$statusTexts[$response->getStatusCode()])
+            );
+            $realTargetUrl = str_replace('http://localhost', '', $response->getTargetUrl());
             $this->assertSame(
             $targetUrl,
-            $response->getTargetUrl(),
-            sprintf('The url "%s" is redirect to "%s" (actual target "%s")', $url, $targetUrl, $response->getTargetUrl())
-        );
+            $realTargetUrl,
+                sprintf('The url "%s" is redirect to "%s" (actual target "%s")', $url, $targetUrl, $realTargetUrl)
+            );
         }
     }
 
     /**
      * getUrls.
      *
-     * @return \Traversable<array>
+     * @return \Traversable<int,array>
      */
     public function getUrls(): \Traversable
     {
-        yield ['', '/profile'];
-        yield ['/admin/user', 'http://localhost/admin/user/'];
-        yield ['/profile', 'http://localhost/profile/'];
-        yield ['/', '/profile'];
-        yield ['/admin/user/', '/admin/user/page-1.html'];
-        yield ['/profile/', '/profile/show.html'];
+        yield['anonymous', 'GET', '/profile/show.html', '/login.html'];
+        yield['anonymous', 'GET', '/profile/edit.html', '/login.html'];
+        yield['anonymous', 'GET', '/profile/password.html', '/login.html'];
+        yield['anonymous', 'GET', '/admin/user/page-1.html', '/login.html'];
+        yield['anonymous', 'GET', '/admin/user/new.html', '/login.html'];
+        yield['anonymous', 'GET', '/admin/user/show-1.html', '/login.html'];
+        yield['anonymous', 'GET', '/admin/user/password-1.html', '/login.html'];
+        yield['anonymous', 'GET', '/admin/user/edit-1.html', '/login.html'];
+        yield['anonymous', 'DELETE', '/admin/user/delete-1.html', '/login.html'];
     }
 }
