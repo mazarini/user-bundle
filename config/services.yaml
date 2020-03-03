@@ -17,3 +17,8 @@ services:
     App\:
         resource: '../src/*'
         exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+
+    mazarini_tools.homepage_subscriber:
+        class: Mazarini\ToolsBundle\EventSubscriber\HomepageSubscriber
+        arguments:
+            $homepage: '%homepage%'
