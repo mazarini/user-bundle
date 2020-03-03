@@ -22,7 +22,6 @@ namespace Mazarini\UserBundle\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use Mazarini\ToolsBundle\Data\Data;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,7 +52,6 @@ class ProfileController extends UserControllerAbstract
 
     /**
      * @Route("/show.html", name="profile_show", methods={"GET"})
-     * @IsGranted("ROLE_USER")
      */
     public function show(): Response
     {
@@ -62,7 +60,6 @@ class ProfileController extends UserControllerAbstract
 
     /**
      * @Route("/edit.html", name="profile_edit", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
      */
     public function edit(Request $request): Response
     {
@@ -71,7 +68,6 @@ class ProfileController extends UserControllerAbstract
 
     /**
      * @Route("/password.html", name="profile_change_password", methods={"GET","POST"})
-     * @IsGranted("ROLE_USER")
      */
     public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
