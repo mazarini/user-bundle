@@ -51,7 +51,11 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 # The page users are redirect to when there is no previous page stored in the
                 # session (for example when the users access directly to the login page).
-                default_target_path: /        
+                default_target_path: /    
+            remember_me:
+                secret:   '%env(resolve:APP_SECRET)%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /    
             logout:
                 # The route name the user can go to in order to logout
                 path: security_logout
