@@ -32,10 +32,20 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
+        $user = $this->getUser();
+        if (null !== $user) {
+            $this->addFlash('info', sprintf('Vous êtes déjà connecté en tant que "%s"', $user->getUsername()));
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
+        if (null !== $error) {
+            $this->addFlash('danger', $error->getMessageKey());
+        }
         // last username entered by the user
         $lastLogin = $authenticationUtils->getLastUsername();
+        if ('' === $lastLogin) {
+            $lastLogin = $user->getUsername();
+        }
 
         return $this->dataRender('login.html.twig', ['last_login' => $lastLogin, 'error' => $error]);
     }
