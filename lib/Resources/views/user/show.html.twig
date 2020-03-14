@@ -29,9 +29,17 @@
 		{% endblock content %}
 
 		{% block edit %}
-			{% include '@MazariniBootstrap/button/link.html.twig' with { 'link': data.links.change_password } %}
+			{% include '@MazariniBootstrap/button/link.html.twig' with { 'link': entityLink('Mot de passe','_change_password',data.entity) } %}
 			{{ parent() }}
 		{% endblock edit %}
+
+		{% block delete %}
+			{{ parent() }}
+		{% endblock delete %}
+
+		{% block back %}
+			{{ parent() }}
+		{% endblock back %}
 
 	{% endembed %}
 
@@ -44,8 +52,8 @@
 		{% block content_confirm %}
 			<p>
 				Etes vous sur de supprimer l'utilisateur
-										"{{ data.entity.username }}"
-										?
+																		"{{ data.entity.username }}"
+																		?
 			</p>
 			<p>
 				Cette opération est irréversible.

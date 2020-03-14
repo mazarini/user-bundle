@@ -6,10 +6,24 @@
 
 {% block title %}
 	Nouvel utilisateur
-{% endblock %}
+{% endblock title %}
 
 {% block content %}
 
-	{% embed '@MazariniBootstrap/crud/_form.html.twig' with {'data': data } %}{% endembed %}
+	{% embed '@MazariniBootstrap/crud/_form.html.twig' with {'data': data } %}
+
+		{% block widget %}
+			{{ parent() }}
+		{% endblock widget %}
+
+		{% block cancel %}
+			{{ parent() }}
+		{% endblock cancel %}
+
+		{% block validate %}
+			{{ parent() }}
+		{% endblock validate %}
+
+	{% endembed %}
 
 {% endblock content %}

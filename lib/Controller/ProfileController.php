@@ -21,7 +21,6 @@ namespace Mazarini\UserBundle\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
-use Mazarini\ToolsBundle\Data\Data;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,14 +71,6 @@ class ProfileController extends UserControllerAbstract
     public function changePassword(Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         return parent::changePasswordAction($request, $encoder, $this->getConnectedUser());
-    }
-
-    protected function setUrl(Data $data): void
-    {
-        $data->addLink('edit', $data->generateUrl('_edit'));
-        $data->addLink('show', $data->generateUrl('_show'), 'View');
-        $data->addLink('change_password', $data->generateUrl('_change_password'), 'Mot de passe');
-        $data->addLink('index', '/', 'Liste');
     }
 
     protected function getTwigFolder(): string

@@ -50,15 +50,15 @@ class UserControllerAbstract extends CrudControllerAbstract
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->flush();
             $this->addFlash('info', 'Password changed');
+            $url = $this->linkGenerator->getEntityLink('label', '_show', $entity)->getUrl();
 
-            return $this->redirect($this->data->generateUrl('_show', ['id' => $entity->getId()]));
+            return $this->redirect($url);
         }
 
         $this->data->setEntity($entity);
+        $this->data->setFormView($form->createView());
 
-        return $this->dataRender('change_password.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->dataRender('change_password.html.twig');
     }
 
     public function new(Request $request, UserPasswordEncoderInterface $encoder): Response

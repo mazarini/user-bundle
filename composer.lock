@@ -1055,12 +1055,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/bootstrap-bundle.git",
-                "reference": "b1c2f3ff38593ff0df55c51954036dd4fd4bff90"
+                "reference": "55b6966cc0b64c61dd1aed857f7e78214fe51968"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/b1c2f3ff38593ff0df55c51954036dd4fd4bff90",
-                "reference": "b1c2f3ff38593ff0df55c51954036dd4fd4bff90",
+                "url": "https://api.github.com/repos/mazarini/bootstrap-bundle/zipball/55b6966cc0b64c61dd1aed857f7e78214fe51968",
+                "reference": "55b6966cc0b64c61dd1aed857f7e78214fe51968",
                 "shasum": ""
             },
             "require": {
@@ -1120,7 +1120,7 @@
             "keywords": [
                 "symfony"
             ],
-            "time": "2020-03-02T08:45:26+00:00"
+            "time": "2020-03-11T20:30:16+00:00"
         },
         {
             "name": "mazarini/crud-bundle",
@@ -1128,12 +1128,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/crud-bundle.git",
-                "reference": "02235b7c4e2797a15f8381bd050888953cf0506e"
+                "reference": "d074ba9c9ee1c6099d60b3d1070bb800d8129bfd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/crud-bundle/zipball/02235b7c4e2797a15f8381bd050888953cf0506e",
-                "reference": "02235b7c4e2797a15f8381bd050888953cf0506e",
+                "url": "https://api.github.com/repos/mazarini/crud-bundle/zipball/d074ba9c9ee1c6099d60b3d1070bb800d8129bfd",
+                "reference": "d074ba9c9ee1c6099d60b3d1070bb800d8129bfd",
                 "shasum": ""
             },
             "require": {
@@ -1192,7 +1192,7 @@
                 "pagination",
                 "symfony"
             ],
-            "time": "2020-03-01T14:37:03+00:00"
+            "time": "2020-03-11T20:43:08+00:00"
         },
         {
             "name": "mazarini/pagination-bundle",
@@ -1200,12 +1200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/pagination-bundle.git",
-                "reference": "10ca9553a8ae476b27317ec01661df36a1d636de"
+                "reference": "af9e5d450a4a6e2f0fa046772ecd5422c0176a83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/pagination-bundle/zipball/10ca9553a8ae476b27317ec01661df36a1d636de",
-                "reference": "10ca9553a8ae476b27317ec01661df36a1d636de",
+                "url": "https://api.github.com/repos/mazarini/pagination-bundle/zipball/af9e5d450a4a6e2f0fa046772ecd5422c0176a83",
+                "reference": "af9e5d450a4a6e2f0fa046772ecd5422c0176a83",
                 "shasum": ""
             },
             "require": {
@@ -1269,7 +1269,7 @@
                 "pagination",
                 "symfony"
             ],
-            "time": "2020-02-29T12:47:02+00:00"
+            "time": "2020-03-10T13:32:40+00:00"
         },
         {
             "name": "mazarini/tools-bundle",
@@ -1277,12 +1277,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/tools-bundle.git",
-                "reference": "8348efabdf366615b8c14147914d697b060d0842"
+                "reference": "d89676c5895bd803b33c1f68aa32a6021e9edbff"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/tools-bundle/zipball/8348efabdf366615b8c14147914d697b060d0842",
-                "reference": "8348efabdf366615b8c14147914d697b060d0842",
+                "url": "https://api.github.com/repos/mazarini/tools-bundle/zipball/d89676c5895bd803b33c1f68aa32a6021e9edbff",
+                "reference": "d89676c5895bd803b33c1f68aa32a6021e9edbff",
                 "shasum": ""
             },
             "require": {
@@ -1343,7 +1343,7 @@
                 "symfony",
                 "toolset"
             ],
-            "time": "2020-02-29T13:12:11+00:00"
+            "time": "2020-03-11T17:05:09+00:00"
         },
         {
             "name": "ocramius/package-versions",
@@ -5047,12 +5047,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/mazarini/test-bundle.git",
-                "reference": "d44492ee8897e73b1a65f6e087c540791800fbe3"
+                "reference": "c8f61da865b68c82e91eacdf6fb85996e6d5edf5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/d44492ee8897e73b1a65f6e087c540791800fbe3",
-                "reference": "d44492ee8897e73b1a65f6e087c540791800fbe3",
+                "url": "https://api.github.com/repos/mazarini/test-bundle/zipball/c8f61da865b68c82e91eacdf6fb85996e6d5edf5",
+                "reference": "c8f61da865b68c82e91eacdf6fb85996e6d5edf5",
                 "shasum": ""
             },
             "require": {
@@ -5119,7 +5119,7 @@
                 "symfony",
                 "test"
             ],
-            "time": "2020-02-29T19:15:49+00:00"
+            "time": "2020-03-11T17:16:29+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5547,16 +5547,16 @@
         },
         {
             "name": "symfony/maker-bundle",
-            "version": "v1.14.4",
+            "version": "v1.14.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/maker-bundle.git",
-                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500"
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/b06ebe524357945a4e7ffee42ade880bdf9e1500",
-                "reference": "b06ebe524357945a4e7ffee42ade880bdf9e1500",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/bc4df88792fbaaeb275167101dc714218475db5f",
+                "reference": "bc4df88792fbaaeb275167101dc714218475db5f",
                 "shasum": ""
             },
             "require": {
@@ -5611,7 +5611,7 @@
                 "scaffold",
                 "scaffolding"
             ],
-            "time": "2020-03-02T15:21:16+00:00"
+            "time": "2020-03-04T13:57:29+00:00"
         },
         {
             "name": "symfony/monolog-bridge",

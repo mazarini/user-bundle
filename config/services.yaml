@@ -4,7 +4,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    homepage: '/profile'
+    home_page: '/profile'
+    home_admin: '/admin/user'
 
 services:
     # default configuration for services in *this* file
@@ -21,4 +22,5 @@ services:
     mazarini_tools.homepage_subscriber:
         class: Mazarini\ToolsBundle\EventSubscriber\HomepageSubscriber
         arguments:
-            $homepage: '%homepage%'
+            $homePage: '%home_page%'
+            $homeAdmin: '%home_admin%'
