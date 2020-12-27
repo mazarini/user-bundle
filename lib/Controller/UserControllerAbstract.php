@@ -85,7 +85,7 @@ class UserControllerAbstract extends CrudControllerAbstract
         /*
          * Set default role if none
          */
-        if ($entity->getRoles() === []) {
+        if ([] === $entity->getRoles()) {
             $entity->setRoles(['ROLE_USER']);
         }
 

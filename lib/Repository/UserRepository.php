@@ -20,7 +20,7 @@
 namespace Mazarini\UserBundle\Repository;
 
 use App\Entity\User;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Mazarini\PaginationBundle\Repository\EntityRepositoryAbstract;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;

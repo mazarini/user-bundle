@@ -38,7 +38,7 @@ class ProfileController extends UserControllerAbstract
      */
     public function index(): Response
     {
-        return  $this->redirectToRoute('profile_show', [], Response::HTTP_MOVED_PERMANENTLY);
+        return $this->redirectToRoute('profile_show', [], Response::HTTP_MOVED_PERMANENTLY);
     }
 
     /**

@@ -68,14 +68,14 @@ class SecurityControllerTest extends WebTestCase
      */
     public function getUrls(): \Traversable
     {
-        yield['anonymous', 'GET', '/profile/show.html', '/login.html'];
-        yield['anonymous', 'GET', '/profile/edit.html', '/login.html'];
-        yield['anonymous', 'GET', '/profile/password.html', '/login.html'];
-        yield['anonymous', 'GET', '/admin/user/page-1.html', '/login.html'];
-        yield['anonymous', 'GET', '/admin/user/new.html', '/login.html'];
-        yield['anonymous', 'GET', '/admin/user/show-1.html', '/login.html'];
-        yield['anonymous', 'GET', '/admin/user/password-1.html', '/login.html'];
-        yield['anonymous', 'GET', '/admin/user/edit-1.html', '/login.html'];
-        yield['anonymous', 'DELETE', '/admin/user/delete-1.html', '/login.html'];
+        yield ['anonymous', 'GET', '/profile/show.html', '/login.html'];
+        yield ['anonymous', 'GET', '/profile/edit.html', '/login.html'];
+        yield ['anonymous', 'GET', '/profile/password.html', '/login.html'];
+        yield ['anonymous', 'GET', '/admin/user/page-1.html', '/login.html'];
+        yield ['anonymous', 'GET', '/admin/user/new.html', '/login.html'];
+        yield ['anonymous', 'GET', '/admin/user/show-1.html', '/login.html'];
+        yield ['anonymous', 'GET', '/admin/user/password-1.html', '/login.html'];
+        yield ['anonymous', 'GET', '/admin/user/edit-1.html', '/login.html'];
+        yield ['anonymous', 'DELETE', '/admin/user/delete-1.html', '/login.html'];
     }
 }

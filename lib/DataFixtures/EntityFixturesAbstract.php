@@ -20,7 +20,7 @@
 namespace Mazarini\UserBundle\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use Mazarini\ToolsBundle\Entity\EntityInterface;
 
 abstract class EntityFixturesAbstract extends Fixture

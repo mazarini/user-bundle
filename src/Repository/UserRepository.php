@@ -20,7 +20,7 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 use Mazarini\UserBundle\Repository\UserRepository as BaseUserRepository;
 
 /**
