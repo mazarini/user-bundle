@@ -15,7 +15,10 @@
 			".scrutinizer": "yaml",
 			".php_cs.dist": "php",
 			"console": "php",
-			"phpunit": "php"
+			"phpunit": "php",
+		},
+		"emmet.includeLanguages": {
+			"twig": "html"
 		},
 		"files.insertFinalNewline": true,
 		"files.trimTrailingWhitespace": true,
